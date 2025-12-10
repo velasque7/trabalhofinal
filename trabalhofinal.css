@@ -1,0 +1,273 @@
+/* --- 1. DEFINIÇÃO DE CORES (VARIÁVEIS) --- */
+:root {
+    /* MODO CLARO (Padrão) */
+    --bg-body: #f4f4f4;
+    --bg-card: #ffffff;
+    --text-color: #333333;
+    --primary-color: #800080;      /* Roxo Original */
+    --primary-hover: #4b0082;
+    --border-color: #ccc;
+    --header-border: #800080;
+    --shadow: rgba(0,0,0,0.1);
+}
+
+/* MODO ESCURO (Ativado via JS) */
+body.dark-mode {
+    --bg-body: #121212;            /* Fundo quase preto */
+    --bg-card: #1e1e1e;            /* Cartões cinza escuro */
+    --text-color: #e0e0e0;         /* Texto claro */
+    --primary-color: #bb86fc;      /* Roxo mais claro (melhor contraste) */
+    --primary-hover: #9955d4;
+    --border-color: #444;
+    --header-border: #bb86fc;
+    --shadow: rgba(0,0,0,0.5);
+}
+
+/* --- 2. GERAL --- */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Usando variáveis para permitir a troca de tema */
+    background-color: var(--bg-body);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s; /* Transição suave */
+}
+
+/* --- 3. HEADER --- */
+header {
+    background-color: var(--bg-card);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--header-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Botão de Tema */
+.theme-btn {
+    background: none;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px; /* Espaço entre botão e menu mobile */
+    transition: transform 0.2s;
+    margin-left: auto; /* Empurra o botão para a direita perto do menu */
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+}
+
+header nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+header nav a:hover {
+    color: var(--primary-hover);
+}
+
+/* Menu Hambúrguer (Mobile) */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+/* --- 4. CONTEÚDO PRINCIPAL --- */
+main {
+    max-width: 960px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+section {
+    background-color: var(--bg-card);
+    padding: 30px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px var(--shadow);
+    transition: background-color 0.3s;
+}
+
+h2 {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* Imagens */
+#sobre img {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+.gallery-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.gallery-container img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px var(--shadow);
+    transition: transform 0.3s;
+}
+
+.gallery-container img:hover {
+    transform: scale(1.05);
+}
+
+/* Vídeo */
+.video-container {
+    text-align: center;
+}
+
+#video video {
+    max-width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px var(--shadow);
+}
+
+/* --- 5. FORMULÁRIO --- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--bg-body); /* Adapta ao tema */
+    color: var(--text-color);         /* Adapta ao tema */
+}
+
+form button {
+    background-color: var(--primary-color);
+    color: #fff; /* Texto do botão sempre claro */
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    align-self: flex-start;
+    transition: background 0.3s;
+}
+
+form button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* --- 6. RODAPÉ --- */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--primary-color); /* Fundo roxo fixo ou var(--bg-card) se preferir */
+    color: white; /* Texto sempre branco no footer roxo */
+    margin-top: auto;
+}
+
+/* --- 7. RESPONSIVIDADE --- */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background-color: var(--bg-card);
+        border-bottom: 3px solid var(--primary-color);
+        text-align: center;
+        padding-bottom: 20px;
+        box-shadow: 0 5px 5px var(--shadow);
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-list li {
+        margin: 15px 0;
+    }
+
+    main {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+
+    section {
+        padding: 20px;
+    }
+
+    .gallery-container img {
+        width: 100%;
+    }
+    
+    form button {
+        width: 100%;
+    }
+    
+    /* Ajuste para o botão de tema não colar no menu */
+    .theme-btn {
+        margin-right: 20px; 
+    }
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synapse One - Versão Final</title>
+    <style>
+        /* --- CSS (ESTILOS) --- */
+
+        /* 1. VARIÁVEIS DE CORES (O Segredo do Modo Escuro) */
+        :root {
+            /* MODO CLARO (Padrão) */
+            --bg-body: #f4f4f4;
+            --bg-card: #ffffff;
+            --text-color: #333333;
+            --primary-color: #800080;      
+            --primary-hover: #4b0082;
+            --border-color: #ccc;
+            --header-border: #800080;
+            --shadow: rgba(0,0,0,0.1);
+        }
+
+        /* MODO ESCURO */
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-color: #e0e0e0;
+            --primary-color: #bb86fc;
+            --primary-hover: #9955d4;
+            --border-color: #444;
+            --header-border: #bb86fc;
+            --shadow: rgba(0,0,0,0.5);
+        }
+
+        /* 2. GERAL */
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg-body);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* 3. HEADER */
+        header {
+            background-color: var(--bg-card);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--header-border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        header h1 { margin: 0; font-size: 1.5rem; }
+
+        /* Botão Tema */
+        .theme-btn {
+            background: none;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px; height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex; align-items: center; justify-content: center;
+            margin-left: auto; margin-right: 15px;
+            transition: transform 0.2s;
+            color: var(--text-color); /* Ícone acompanha a cor do texto */
+        }
+        .theme-btn:hover { transform: scale(1.1); }
+
+        /* Navegação Desktop */
+        header nav ul {
+            margin: 0; padding: 0;
+            list-style: none;
+            display: flex; gap: 20px;
+        }
+        header nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Botão Menu Mobile (Hambúrguer) */
+        .menu-toggle {
+            display: none; /* Escondido no PC */
+            cursor: pointer;
+            flex-direction: column; gap: 5px;
+        }
+        .menu-toggle .bar {
+            width: 25px; height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        /* 4. CONTEÚDO */
+        main { max-width: 960px; margin: 40px auto; padding: 0 20px; }
+
+        section {
+            background-color: var(--bg-card);
+            padding: 30px; margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        h2 { border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-top: 0; }
+        
+        img { max-width: 100%; border-radius: 8px; }
+        
+        /* Galeria */
+        .gallery-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .gallery-container img {
+            width: 300px; height: 200px; object-fit: cover;
+            box-shadow: 0 4px 8px var(--shadow);
+            transition: transform 0.3s;
+        }
+        .gallery-container img:hover { transform: scale(1.05); }
+
+        /* Vídeo */
+        .video-container { text-align: center; }
+        video { max-width: 100%; border-radius: 5px; }
+
+        /* Formulário */
+        form { display: flex; flex-direction: column; gap: 15px; }
+        input, textarea {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-body);
+            color: var(--text-color);
+            border-radius: 5px;
+        }
+        button[type="submit"] {
+            background-color: var(--primary-color);
+            color: #fff; padding: 12px 25px;
+            border: none; border-radius: 5px;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center; padding: 20px;
+            background-color: var(--primary-color); color: white;
+            margin-top: auto;
+        }
+
+        /* --- 5. RESPONSIVIDADE (MEDIA QUERIES) --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: flex; } /* Mostra hambúrguer */
+            
+            .nav-list {
+                display: none; /* Esconde menu normal */
+                flex-direction: column;
+                width: 100%; position: absolute;
+                top: 70px; left: 0;
+                background-color: var(--bg-card);
+                border-bottom: 3px solid var(--primary-color);
+                text-align: center; padding-bottom: 20px;
+                box-shadow: 0 5px 5px var(--shadow);
+            }
+            .nav-list.active { display: flex; } /* Mostra quando clicado */
+            .nav-list li { margin: 15px 0; }
+            
+            .gallery-container img { width: 100%; height: auto; } /* Galeria 100% largura */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Synapse One</h1>
+        
+        <button id="theme-toggle" class="theme-btn">🌙</button>
+
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+
+        <nav>
+            <ul class="nav-list">
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="#video">Vídeo</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="sobre">
+            <h2>Sobre a Empresa</h2>
+            <p>A Synapse One surge com a missão de transformar o futuro das interfaces entre humanos e máquinas.</p>
+            <img src="imagem.jpg" alt="Imagem representativa" style="background:#ddd; min-height:200px;">
+        </section>
+
+        <section id="galeria">
+            <h2>Galeria</h2>
+            <div class="gallery-container">
+               <img src="trabalyo.png" alt="Imagem 1" style="background:grey;">
+               <img src="trablahofia.png" alt="Imagem 2" style="background:grey;">
+               <img src="trabaçhofi.png" alt="Imagem 3" style="background:grey;">
+            </div>
+        </section>
+
+        <section id="video">
+            <h2>Vídeo</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="synaos.mp4" type="video/mp4">
+                    Seu navegador não suporta.
+                </video>
+            </div>
+        </section>
+
+        <section id="contato">
+            <h2>Contato</h2>
+            <form id="contactForm">
+                <label>Nome:</label>
+                <input type="text" id="nome" required>
+                <label>E-mail:</label>
+                <input type="email" id="email" required>
+                <label>Mensagem:</label>
+                <textarea id="mensagem" rows="5" required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Synapse One.</p>
+    </footer>
+
+    <script>
+        // --- JAVASCRIPT (FUNCIONALIDADES) ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. MODO ESCURO
+            const themeBtn = document.getElementById('theme-toggle');
+            const body = document.body;
+            
+            // Verifica memória
+            if(localStorage.getItem('tema') === 'dark') {
+                body.classList.add('dark-mode');
+                themeBtn.innerText = '☀️';
+            }
+
+            themeBtn.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if(body.classList.contains('dark-mode')){
+                    themeBtn.innerText = '☀️';
+                    localStorage.setItem('tema', 'dark');
+                } else {
+                    themeBtn.innerText = '🌙';
+                    localStorage.setItem('tema', 'light');
+                }
+            });
+
+            // 2. MENU MOBILE
+            const menuToggle = document.getElementById('mobile-menu');
+            const navList = document.querySelector('.nav-list');
+
+            menuToggle.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+
+            // 3. FORMULÁRIO
+            const form = document.getElementById('contactForm');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert(`Obrigado, ${document.getElementById('nome').value}! Mensagem enviada.`);
+                form.reset();
+            });
+        });
+    </script>
+
+</body>
+</html>
